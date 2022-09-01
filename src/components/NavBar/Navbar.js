@@ -10,8 +10,8 @@ const Navbar = () => {
     useContext(ProductContext);
 
   const { array } = useContext(productDeleteContext);
-  let firstBtnName = "Add";
-  let secondBtnName = "Mass Delete";
+  // let firstBtnName = "Add";
+  // let secondBtnName = "Mass Delete";
   let navbarHeader = "Product List";
   let enableChangeRoute = true;
 
@@ -20,8 +20,8 @@ const Navbar = () => {
 
   if (path === "add-product") {
     enableChangeRoute = false;
-    firstBtnName = "Save";
-    secondBtnName = "Cancel";
+    // firstBtnName = "Save";
+    // secondBtnName = "Cancel";
     navbarHeader = "Product Add";
   }
 
@@ -88,13 +88,13 @@ const Navbar = () => {
             className="add-button"
             onClick={enableChangeRoute ? changeRoute : save}
           >
-            <p>{firstBtnName}</p>
+            {enableChangeRoute ? <p>ADD</p> : <p>Save</p>} {/* throwing an error when testing. It wants you to display just 'ADD' or 'SAVE' */}
           </button>
           <button
             id="delete-product-btn"
             onClick={enableChangeRoute ? massDelete : returnToHome}
           >
-            <p>{secondBtnName}</p>
+            {enableChangeRoute ? <p>Mass Delete</p> : <p>Cancel</p>}
           </button>
         </div>
       </div>
