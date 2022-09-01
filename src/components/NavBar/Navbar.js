@@ -94,7 +94,7 @@ const Navbar = () => {
             id="delete-product-btn"
             onClick={enableChangeRoute ? massDelete : returnToHome}
           >
-            {enableChangeRoute ? <p>Mass Delete</p> : <p>Cancel</p>}
+            {enableChangeRoute ? <p>MASS DELETE</p> : <p>Cancel</p>}
           </button>
         </div>
       </div>
