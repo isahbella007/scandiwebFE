@@ -1,0 +1,32 @@
+.cards-container{ 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, auto));
+    grid-column: 1/7;
+    gap: 1px;
+    /* align-items: center; */
+}
+.product-cards{ 
+    height: 150px;
+    width: 200px;
+    border: 2px solid black ;
+    margin-bottom: 2em;
+}
+.checkbox{ 
+    /* padding: 0.1em; */
+    position: absolute;
+    margin-top: 1em;
+    margin-left: 0.8em;
+}
+.card-details{
+    margin: 0 auto; 
+    margin-top: 2em;
+    text-align: center;
+}
+.card-details p{ 
+    font-family: var(--bodyTextFont);
+}
+@media only screen and (max-width: 600px) {
+    .cards-container{ 
+        justify-content: center;
+    }    
+}

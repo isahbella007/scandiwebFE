@@ -1,0 +1,35 @@
+.navbar-container{ 
+    height: fit-content;
+}
+.navbar-header{ 
+    display: flex;
+    align-items: center;
+}
+.navbar-header h2{ 
+    font-family: var(--headerFamily);
+}
+.navbar-buttons{ 
+    margin-left: auto; 
+    display: flex;
+    gap: 5px;
+}
+.navbar-buttons button { 
+    background-color: white; 
+    height: 30px;
+    width: fit-content;
+    cursor: pointer;
+    border: none;
+    box-shadow:  1.95px 1.95px 2.6px rgba(0, 0, 0, 0.15);
+}
+.navbar-buttons button p{ 
+    padding: 0.5em;
+    color: var(--veryDarkCyan);
+    font-family: var(--headerFamily);
+}
+.navbar-container hr{ 
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid black;
+    margin: 0.7em 0;
+}

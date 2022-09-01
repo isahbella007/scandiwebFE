@@ -1,0 +1,42 @@
+.error-container{ 
+    display: grid;
+    height: 100%;
+    width: 100%;
+}
+.container-details{ 
+    text-align: center;
+}
+.error-header{ 
+    font-family: var(--headerFamily);
+    font-size: 50px;
+
+}
+.error-gif {
+  background-image: url(https://cdn.dribbble.com/users/1322726/screenshots/5695684/media/a01e5969a7eca6426880f81d8b15e0e8.gif);
+  height: 350px;
+  width: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-bottom: 0.5em;
+}
+.lost, .not-available{ 
+    font-family: var(--bodyTextFont);
+    font-size: 30px;
+    margin-bottom: 0.5em;
+}
+.not-available{ 
+    font-size: 20px;
+}
+.go-home{ 
+    background-color: #59CE6B; 
+    height: 30px;
+    width: fit-content;
+    cursor: pointer;
+    border: none;
+    box-shadow:  1.95px 1.95px 2.6px rgba(0, 0, 0, 0.15);
+}
+.go-home p{ 
+    padding: 0.5em;
+    color: var(--veryDarkCyan);
+    font-family: var(--headerFamily);
+}
