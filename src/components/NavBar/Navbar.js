@@ -43,12 +43,10 @@ const Navbar = () => {
       .delete("https://scandiwebserver.godwinosakwe.com/products", {
         data: array,
       })
-      .then(() => {
-        window.location.reload();
-      })
       .catch((error) => {
         console.log(error);
       });
+      window.location.reload();
   };
 
   const save = async () => {
