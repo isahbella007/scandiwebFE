@@ -35,7 +35,6 @@ const Navbar = () => {
   };
 
   const massDelete = async () => {
-    console.log(array);
     if (array.length === 0) {
       return alert("Please select a product to delete.");
     }
@@ -50,15 +49,6 @@ const Navbar = () => {
   };
 
   const save = async () => {
-    console.log("Save detail entered");
-    console.log(
-      "fetched details from add page on clicking save button",
-      sku,
-      name,
-      price,
-      productType,
-      productDetail
-    );
     await axios
       .post("https://scandiwebserver.godwinosakwe.com/products", {
         SKU: sku,
@@ -66,9 +56,6 @@ const Navbar = () => {
         price: price,
         productType: productType,
         productDetail: productDetail,
-      })
-      .then((response) => {
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);

@@ -37,7 +37,6 @@ const Add = () => {
 
   useEffect(() => {
     if (furnitureInputField === true) {
-    //   console.log("object");
       const furnitureDetails = (furnitureHeight += "x".concat(
         (furnitureWidth += "x").concat(furnitureLength)
       ));
@@ -45,16 +44,6 @@ const Add = () => {
     }
   }, [furnitureHeight, furnitureWidth, furnitureLength]);
 
-
-  
-//   console.log(
-//     "Item to send when I click on the save button are: ",
-//     sku,
-//     name,
-//     price,
-//     productType,
-//     productDetail
-//   );
 
   return (
     <>
