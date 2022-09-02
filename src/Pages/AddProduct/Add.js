@@ -122,7 +122,7 @@ const Add = () => {
                   )
                 }
                 onInput={(e) => e.target.setCustomValidity("")}
-                placeholder="Please provide size. E.g...400MB"
+                placeholder="Please provide size. E.g...400"
                 onChange={(e) => setProductDetail(e.target.value)}
               ></input>
               <div id="dvdInputError"></div>
@@ -142,7 +142,7 @@ const Add = () => {
                   )
                 }
                 onInput={(e) => e.target.setCustomValidity("")}
-                placeholder="Please provide weight. E.g: 2kg"
+                placeholder="Please provide weight. E.g: 2"
                 onChange={(e) => setProductDetail(e.target.value)}
               ></input>
               <div id="bookInputError"></div>

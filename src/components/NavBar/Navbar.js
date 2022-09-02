@@ -34,19 +34,19 @@ const Navbar = () => {
     navigate("/");
   };
 
-  const massDelete = () => {
+  const massDelete = async () => {
     console.log(array);
     if (array.length === 0) {
       return alert("Please select a product to delete.");
     }
-    axios
+    await axios
       .delete("https://scandiwebserver.godwinosakwe.com/products", {
         data: array,
       })
       .catch((error) => {
         console.log(error);
       });
-      window.location.reload();
+    window.location.reload();
   };
 
   const save = async () => {
@@ -85,7 +85,8 @@ const Navbar = () => {
             className="add-button"
             onClick={enableChangeRoute ? changeRoute : save}
           >
-            {enableChangeRoute ? <p>ADD</p> : <p>Save</p>} {/* throwing an error when testing. It wants you to display just 'ADD' or 'SAVE' */}
+            {enableChangeRoute ? <p>ADD</p> : <p>Save</p>}{" "}
+            {/* throwing an error when testing. It wants you to display just 'ADD' or 'SAVE' */}
           </button>
           <button
             id="delete-product-btn"
