@@ -2,7 +2,13 @@ import React, { createContext, useEffect, useState } from "react";
 import Navbar from "../../components/NavBar/Navbar";
 import "./Add.css";
 
-export const ProductContext = createContext({sku: "", name: "", price: "", productType: "", productDetail: ""})
+export const ProductContext = createContext({
+  sku: "",
+  name: "",
+  price: "",
+  productType: "",
+  productDetail: "",
+});
 
 const Add = () => {
   const [productType, setProductType] = useState("SelectProductType");
@@ -31,9 +37,9 @@ const Add = () => {
   //   productType is already gotten.
   const [productDetail, setProductDetail] = useState();
 
-  let [furnitureHeight, setFurnitureHeight] = useState();
-  let [furnitureWidth, setFurnitureWidth] = useState();
-  let [furnitureLength, setFurnitureLength] = useState();
+  let [furnitureHeight, setFurnitureHeight] = useState(0);
+  let [furnitureWidth, setFurnitureWidth] = useState(0);
+  let [furnitureLength, setFurnitureLength] = useState(0);
 
   useEffect(() => {
     if (furnitureInputField === true) {
@@ -44,13 +50,14 @@ const Add = () => {
     }
   }, [furnitureHeight, furnitureWidth, furnitureLength]);
 
-
   return (
     <>
-    <ProductContext.Provider value = {{sku, name, price, productType, productDetail}}>
-        <Navbar  />
-    </ProductContext.Provider>
-      
+      <ProductContext.Provider
+        value={{ sku, name, price, productType, productDetail }}
+      >
+        <Navbar />
+      </ProductContext.Provider>
+
       <div className="form">
         <form id="product_form">
           <label htmlFor="fname">SKU</label>
@@ -61,19 +68,18 @@ const Add = () => {
             required
             onChange={(e) => setSku(e.target.value)}
           />
-
+          <div id="sku-error-text"></div>
+          <br></br>
           <label htmlFor="lname">Name</label>
           <input
             type="text"
             id="name"
             required
-            onInvalid={(e) =>
-              e.target.setCustomValidity("Please,submit required data")
-            }
-            onInput={(e) => e.target.setCustomValidity("")}
             placeholder="Please provide product name"
             onChange={(e) => setName(e.target.value)}
           />
+          <div id="name-error-text"></div>
+          <br></br>
 
           <label htmlFor="price">Price ($)</label>
           <input
@@ -81,14 +87,12 @@ const Add = () => {
             id="price"
             placeholder="Please provide product price"
             required
-            onInvalid={(e) =>
-              e.target.setCustomValidity(
-                "Please, provide the data of indicated type"
-              )
-            }
-            onInput={(e) => e.target.setCustomValidity("")}
+            min={0.1}
             onChange={(e) => setPrice(e.target.value)}
           />
+          <div id="price-error-text"></div>
+          <div id="bad-price-input-text"></div>
+          <br></br>
 
           <label htmlFor="Product">Type Switcher</label>
           <select id="productType" value={productType} onChange={handleChange}>
@@ -97,6 +101,8 @@ const Add = () => {
             <option value="Book">Book</option>
             <option value="Furniture">Furniture</option>
           </select>
+          <div id="selector-error-text"></div>
+          <br></br>
 
           {dvdInputField && (
             <>
@@ -105,13 +111,7 @@ const Add = () => {
                 id="size"
                 type="number"
                 required
-                onInvalid={(e) =>
-                  e.target.setCustomValidity(
-                    "Please, provide the data of indicated type"
-                  )
-                }
-                onInput={(e) => e.target.setCustomValidity("")}
-                placeholder="Please provide size. E.g...400"
+                placeholder="Please, provide size"
                 onChange={(e) => setProductDetail(e.target.value)}
               ></input>
               <div id="dvdInputError"></div>
@@ -125,13 +125,7 @@ const Add = () => {
                 id="weight"
                 type="number"
                 required
-                onInvalid={(e) =>
-                  e.target.setCustomValidity(
-                    "Please, provide the data of indicated type"
-                  )
-                }
-                onInput={(e) => e.target.setCustomValidity("")}
-                placeholder="Please provide weight. E.g: 2"
+                placeholder="Please, provide weight"
                 onChange={(e) => setProductDetail(e.target.value)}
               ></input>
               <div id="bookInputError"></div>
@@ -145,45 +139,29 @@ const Add = () => {
                 id="height"
                 type="number"
                 required
-                onInvalid={(e) =>
-                  e.target.setCustomValidity(
-                    "Please, provide the data of indicated type"
-                  )
-                }
-                onInput={(e) => e.target.setCustomValidity("")}
-                placeholder="Please provide height. E.g:45"
+                placeholder="Please, provide height."
                 onChange={(e) => setFurnitureHeight(e.target.value)}
               ></input>
               <div id="heightInputError"></div>
+              <br></br>
 
               <label htmlFor="FurnitureWidth">Width (CM)</label>
               <input
                 id="width"
                 type="number"
                 required
-                onInvalid={(e) =>
-                  e.target.setCustomValidity(
-                    "Please, provide the data of indicated type"
-                  )
-                }
-                onInput={(e) => e.target.setCustomValidity("")}
-                placeholder="Please provide width. E.g:45"
+                placeholder="Please, provide width."
                 onChange={(e) => setFurnitureWidth(e.target.value)}
               ></input>
               <div id="widthInputError"></div>
+              <br></br>
 
               <label htmlFor="Furniture Length">Length (CM)</label>
               <input
                 id="length"
                 type="number"
                 required
-                onInvalid={(e) =>
-                  e.target.setCustomValidity(
-                    "Please, provide the data of indicated type"
-                  )
-                }
-                onInput={(e) => e.target.setCustomValidity("")}
-                placeholder="Please provide length. E.g:45"
+                placeholder="Please, provide length."
                 onChange={(e) => setFurnitureLength(e.target.value)}
               ></input>
               <div id="lengthInputError"></div>
