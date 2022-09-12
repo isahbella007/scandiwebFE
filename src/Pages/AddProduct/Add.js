@@ -31,8 +31,8 @@ const Add = () => {
       : setFurnitureInputField(false);
   }, [productType]);
 
-  const [sku, setSku] = useState();
-  const [name, setName] = useState();
+  const [sku, setSku] = useState("");
+  const [name, setName] = useState("");
   const [price, setPrice] = useState();
   //   productType is already gotten.
   const [productDetail, setProductDetail] = useState();
@@ -50,6 +50,35 @@ const Add = () => {
     }
   }, [furnitureHeight, furnitureWidth, furnitureLength]);
 
+  const transform = (element) => { 
+    var x = document.getElementById(element); 
+    if(x.value < 0){ 
+      x.value = x.value * -1
+    }
+  }
+  const handleDvdInput = () => { 
+    transform("size")
+  }
+
+  const handlePriceInput = () => { 
+    transform("price")
+  }
+
+  const handleBookInput = () => { 
+    transform("weight")
+  }
+
+  const handleFurnitureHeight = () => { 
+    transform("height")
+  }
+
+  const handleFurnitureWidth = () => { 
+    transform("width")
+  }
+
+  const handleFurnitureLength = () => { 
+    transform("length")
+  }
   return (
     <>
       <ProductContext.Provider
@@ -64,6 +93,7 @@ const Add = () => {
           <input
             type="text"
             id="sku"
+            className="error"
             placeholder="Please provide product Id"
             required
             onChange={(e) => setSku(e.target.value)}
@@ -87,7 +117,8 @@ const Add = () => {
             id="price"
             placeholder="Please provide product price"
             required
-            min={0.1}
+            pattern="^[0-9]"
+            onKeyUp={handlePriceInput}
             onChange={(e) => setPrice(e.target.value)}
           />
           <div id="price-error-text"></div>
@@ -112,6 +143,8 @@ const Add = () => {
                 type="number"
                 required
                 placeholder="Please, provide size"
+                pattern="^[0-9]"
+                onKeyUp={handleDvdInput}
                 onChange={(e) => setProductDetail(e.target.value)}
               ></input>
               <div id="dvdInputError"></div>
@@ -126,6 +159,8 @@ const Add = () => {
                 type="number"
                 required
                 placeholder="Please, provide weight"
+                pattern="^[0-9]"
+                onKeyUp={handleBookInput}
                 onChange={(e) => setProductDetail(e.target.value)}
               ></input>
               <div id="bookInputError"></div>
@@ -140,6 +175,8 @@ const Add = () => {
                 type="number"
                 required
                 placeholder="Please, provide height."
+                pattern="^[0-9]"
+                onKeyUp={handleFurnitureHeight}
                 onChange={(e) => setFurnitureHeight(e.target.value)}
               ></input>
               <div id="heightInputError"></div>
@@ -151,6 +188,7 @@ const Add = () => {
                 type="number"
                 required
                 placeholder="Please, provide width."
+                onKeyUp={handleFurnitureWidth}
                 onChange={(e) => setFurnitureWidth(e.target.value)}
               ></input>
               <div id="widthInputError"></div>
@@ -162,6 +200,7 @@ const Add = () => {
                 type="number"
                 required
                 placeholder="Please, provide length."
+                onKeyUp={handleFurnitureLength}
                 onChange={(e) => setFurnitureLength(e.target.value)}
               ></input>
               <div id="lengthInputError"></div>
