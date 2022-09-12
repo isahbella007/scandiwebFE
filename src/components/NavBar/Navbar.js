@@ -4,6 +4,10 @@ import { ProductContext } from "../../Pages/AddProduct/Add";
 import axios from "axios";
 import "./Navbar.css";
 import { productDeleteContext } from "../../Pages/Home/Home";
+import {
+  displayErrorMessage,
+  formProcess,
+} from "../../util/FormValidation";
 
 const Navbar = () => {
   const { sku, name, price, productType, productDetail } =
@@ -47,14 +51,9 @@ const Navbar = () => {
     window.location.reload();
   };
 
-  const save = async () => {
-    if (
-      sku !== undefined &&
-      name !== undefined &&
-      price !== undefined &&
-      productType !== undefined &&
-      productDetail !== undefined
-    ) {
+  const save = async (e) => {
+    e.preventDefault();
+    if (formProcess(sku, name, price, productType, productDetail)) {
       await axios
         .post(liveUrl, {
           SKU: sku,
@@ -64,7 +63,7 @@ const Navbar = () => {
           productDetail: productDetail,
         })
         .then((response) => {
-          if (response.data != "") {
+          if (response.data !== "") {
             alert(response.data);
           }
         })
@@ -74,90 +73,7 @@ const Navbar = () => {
 
       navigate("/");
     } else {
-      var priceRegex = /^[0-9]\d*(\.\d+)?$/;
-      var numberRegex = /^[1-9]\d*(\.\d+)?$/;
-
-      if (sku === undefined) {
-        document.getElementById("sku-error-text").innerHTML =
-          "Please, submit required data";
-      } else {
-        document.getElementById("sku-error-text").innerHTML = "";
-      }
-
-      if (name === undefined) {
-        document.getElementById("name-error-text").innerHTML =
-          "Please, submit required data";
-      } else {
-        document.getElementById("name-error-text").innerHTML = "";
-      }
-
-      if (price === undefined) {
-        document.getElementById("price-error-text").innerHTML =
-          "Please, submit required data";
-      } else {
-        document.getElementById("price-error-text").innerHTML = "";
-      }
-
-      if (!document.getElementById("price").value.match(priceRegex)) {
-        document.getElementById("bad-price-input-text").innerHTML =
-          "Please, provide a number";
-      } else {
-        document.getElementById("bad-price-input-text").innerHTML = "";
-      }
-
-      if (productType === "SelectProductType") {
-        document.getElementById("selector-error-text").innerHTML =
-          "Please, select product type";
-      } else {
-        document.getElementById("selector-error-text").innerHTML = "";
-      }
-      if (productType === "DVD") {
-        var sizeValue = document.getElementById("size").value;
-        if (!sizeValue.match(numberRegex)) {
-          document.getElementById("dvdInputError").innerHTML =
-            "Please, provide a number";
-        } else {
-          document.getElementById("dvdInputError").innerHTML = "";
-        }
-      }
-
-      if (productType === "Book") {
-        var bookWeightValue = document.getElementById("weight").value;
-        if (!bookWeightValue.match(numberRegex)) {
-          document.getElementById("bookInputError").innerHTML =
-            "Please, provide a number";
-        } else {
-          document.getElementById("bookInputError").innerHTML = "";
-        }
-      }
-      // var formPrice = document.getElementById('price').value;
-
-      if (productType === "Furniture") {
-        var furnitureHeightValue = document.getElementById("height").value;
-        var furnitureWidthValue = document.getElementById("width").value;
-        var furnitureLengthValue = document.getElementById("length").value;
-
-        if (!furnitureHeightValue.match(numberRegex)) {
-          document.getElementById("heightInputError").innerHTML =
-            "Please, provide a number";
-        } else {
-          document.getElementById("heightInputError").innerHTML = "";
-        }
-
-        if (!furnitureWidthValue.match(numberRegex)) {
-          document.getElementById("widthInputError").innerHTML =
-            "Please, provide a number";
-        } else {
-          document.getElementById("widthInputError").innerHTML = "";
-        }
-
-        if (!furnitureLengthValue.match(numberRegex)) {
-          document.getElementById("lengthInputError").innerHTML =
-            "Please, provide a number";
-        } else {
-          document.getElementById("lengthInputError").innerHTML = "";
-        }
-      }
+      displayErrorMessage(sku, name, price, productType);
     }
   };
   return (
