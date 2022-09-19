@@ -1,213 +1,142 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { useState } from "react";
+import FormInput from "../../components/FormInput/FormInput";
+import "../../components/FormInput/FormInput.css";
 import Navbar from "../../components/NavBar/Navbar";
 import "./Add.css";
-
-export const ProductContext = createContext({
-  sku: "",
-  name: "",
-  price: "",
-  productType: "",
-  productDetail: "",
-});
+import {
+  formInputs,
+  dvdFormInput,
+  bookFormInput,
+  furnitureFormInput,
+} from "../../constants/forms";
+import { ProductContext } from "../../util/ProductContext";
 
 const Add = () => {
-  const [productType, setProductType] = useState("SelectProductType");
+  const [values, setValues] = useState({
+    sku: "",
+    name: "",
+    price: "",
+    productType: "SelectProductType",
+    productDetail: "",
+    dvdSize: "",
+    bookWeight: "",
+    furnitureHeight: "",
+    furnitureWidth: "",
+    furnitureLength: "",
+  });
 
-  const [dvdInputField, setDvdInputField] = useState(false);
-  const [bookInputField, setBookInputField] = useState(false);
-  const [furnitureInputField, setFurnitureInputField] = useState(false);
+  let dvdInput = false;
+  let bookInput = false;
+  let furnitureInput = false;
 
   const handleChange = (e) => {
-    setProductType(e.target.value);
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+  const handleSelect = (e) => {
+    setValues({ ...values, [e.target.id]: e.target.value });
   };
 
-  useEffect(() => {
-    productType === "DVD" ? setDvdInputField(true) : setDvdInputField(false);
-
-    productType === "Book" ? setBookInputField(true) : setBookInputField(false);
-
-    productType === "Furniture"
-      ? setFurnitureInputField(true)
-      : setFurnitureInputField(false);
-  }, [productType]);
-
-  const [sku, setSku] = useState("");
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState();
-  //   productType is already gotten.
-  const [productDetail, setProductDetail] = useState();
-
-  let [furnitureHeight, setFurnitureHeight] = useState(0);
-  let [furnitureWidth, setFurnitureWidth] = useState(0);
-  let [furnitureLength, setFurnitureLength] = useState(0);
-
-  useEffect(() => {
-    if (furnitureInputField === true) {
-      const furnitureDetails = (furnitureHeight += "x".concat(
-        (furnitureWidth += "x").concat(furnitureLength)
-      ));
-      setProductDetail(furnitureDetails);
+  const transform = (e) => {
+    var x = document.getElementById(e.target.id);
+    if (x.value < 0) {
+      x.value = x.value * -1;
     }
-  }, [furnitureHeight, furnitureWidth, furnitureLength]);
+  };
 
-  const transform = (element) => { 
-    var x = document.getElementById(element); 
-    if(x.value < 0){ 
-      x.value = x.value * -1
-    }
+  if (values.productType === "DVD") {
+    dvdInput = true;
+    values.productDetail = values.dvdSize;
+    values.bookWeight = "";
+    values.furnitureHeight = "";
+    values.furnitureWidth = "";
+    values.furnitureLength = "";
+  } else if (values.productType === "Book") {
+    bookInput = true;
+    values.productDetail = values.bookWeight;
+    values.dvdSize = "";
+    values.furnitureHeight = "";
+    values.furnitureWidth = "";
+    values.furnitureLength = "";
+  } else if (values.productType === "Furniture") {
+    furnitureInput = true;
+    values.productDetail = "";
+    values.bookWeight = "";
+    values.dvdSize = "";
   }
-  const handleDvdInput = () => { 
-    transform("size")
+  if (
+    values.furnitureHeight !== "" &&
+    values.furnitureWidth !== "" &&
+    values.furnitureLength !== ""
+  ) {
+    values.productDetail = values.furnitureHeight
+      .concat("x")
+      .concat(values.furnitureWidth.concat("x"))
+      .concat(values.furnitureLength);
   }
 
-  const handlePriceInput = () => { 
-    transform("price")
-  }
-
-  const handleBookInput = () => { 
-    transform("weight")
-  }
-
-  const handleFurnitureHeight = () => { 
-    transform("height")
-  }
-
-  const handleFurnitureWidth = () => { 
-    transform("width")
-  }
-
-  const handleFurnitureLength = () => { 
-    transform("length")
-  }
   return (
     <>
-      <ProductContext.Provider
-        value={{ sku, name, price, productType, productDetail }}
-      >
+      <ProductContext.Provider value={{ ...values }}>
         <Navbar />
       </ProductContext.Provider>
+      <form id="product_form">
+        {formInputs.map((items) => (
+          <FormInput
+            key={items.id}
+            {...items}
+            onChange={handleChange}
+            transform={transform}
+          ></FormInput>
+        ))}
+        <div className="form-header-text">
+          <label>Type Switcher</label>
+          <p className="form-text">*</p>
+        </div>
 
-      <div className="form">
-        <form id="product_form">
-          <label htmlFor="fname">SKU</label>
-          <input
-            type="text"
-            id="sku"
-            className="error"
-            placeholder="Please provide product Id"
-            required
-            onChange={(e) => setSku(e.target.value)}
-          />
-          <div id="sku-error-text"></div>
-          <br></br>
-          <label htmlFor="lname">Name</label>
-          <input
-            type="text"
-            id="name"
-            required
-            placeholder="Please provide product name"
-            onChange={(e) => setName(e.target.value)}
-          />
-          <div id="name-error-text"></div>
-          <br></br>
-
-          <label htmlFor="price">Price ($)</label>
-          <input
-            type="number"
-            id="price"
-            placeholder="Please provide product price"
-            required
-            pattern="^[0-9]"
-            onKeyUp={handlePriceInput}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <div id="price-error-text"></div>
-          <div id="bad-price-input-text"></div>
-          <br></br>
-
-          <label htmlFor="Product">Type Switcher</label>
-          <select id="productType" value={productType} onChange={handleChange}>
-            <option value="SelectProductType">Select your product type</option>
-            <option value="DVD">DVD</option>
-            <option value="Book">Book</option>
-            <option value="Furniture">Furniture</option>
-          </select>
-          <div id="selector-error-text"></div>
-          <br></br>
-
-          {dvdInputField && (
-            <>
-              <label htmlFor="DvdInput">Size (MB)</label>
-              <input
-                id="size"
-                type="number"
-                required
-                placeholder="Please, provide size"
-                pattern="^[0-9]"
-                onKeyUp={handleDvdInput}
-                onChange={(e) => setProductDetail(e.target.value)}
-              ></input>
-              <div id="dvdInputError"></div>
-            </>
-          )}
-
-          {bookInputField && (
-            <>
-              <label htmlFor="BookInput">Weight (KG)</label>
-              <input
-                id="weight"
-                type="number"
-                required
-                placeholder="Please, provide weight"
-                pattern="^[0-9]"
-                onKeyUp={handleBookInput}
-                onChange={(e) => setProductDetail(e.target.value)}
-              ></input>
-              <div id="bookInputError"></div>
-            </>
-          )}
-
-          {furnitureInputField && (
-            <>
-              <label htmlFor="Furniture Input">Height (CM)</label>
-              <input
-                id="height"
-                type="number"
-                required
-                placeholder="Please, provide height."
-                pattern="^[0-9]"
-                onKeyUp={handleFurnitureHeight}
-                onChange={(e) => setFurnitureHeight(e.target.value)}
-              ></input>
-              <div id="heightInputError"></div>
-              <br></br>
-
-              <label htmlFor="FurnitureWidth">Width (CM)</label>
-              <input
-                id="width"
-                type="number"
-                required
-                placeholder="Please, provide width."
-                onKeyUp={handleFurnitureWidth}
-                onChange={(e) => setFurnitureWidth(e.target.value)}
-              ></input>
-              <div id="widthInputError"></div>
-              <br></br>
-
-              <label htmlFor="Furniture Length">Length (CM)</label>
-              <input
-                id="length"
-                type="number"
-                required
-                placeholder="Please, provide length."
-                onKeyUp={handleFurnitureLength}
-                onChange={(e) => setFurnitureLength(e.target.value)}
-              ></input>
-              <div id="lengthInputError"></div>
-            </>
-          )}
-        </form>
-      </div>
+        <select id="productType" onChange={handleSelect} required>
+          <option>Select Product Type</option>
+          <option>DVD</option>
+          <option>Book</option>
+          <option>Furniture</option>
+        </select>
+        <div id="type-switcher-error"></div>
+        {dvdInput && (
+          <>
+            {dvdFormInput.map((items) => (
+              <FormInput
+                key={items.id}
+                {...items}
+                onChange={handleChange}
+                transform={transform}
+              ></FormInput>
+            ))}
+          </>
+        )}
+        {bookInput && (
+          <>
+            {bookFormInput.map((items) => (
+              <FormInput
+                key={items.id}
+                {...items}
+                onChange={handleChange}
+                transform={transform}
+              ></FormInput>
+            ))}
+          </>
+        )}
+        {furnitureInput && (
+          <>
+            {furnitureFormInput.map((items) => (
+              <FormInput
+                key={items.id}
+                {...items}
+                onChange={handleChange}
+                transform={transform}
+              ></FormInput>
+            ))}
+          </>
+        )}
+      </form>
     </>
   );
 };

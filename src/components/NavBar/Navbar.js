@@ -1,22 +1,17 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { ProductContext } from "../../Pages/AddProduct/Add";
 import axios from "axios";
 import "./Navbar.css";
-import { productDeleteContext } from "../../Pages/Home/Home";
-import {
-  displayErrorMessage,
-  formProcess,
-} from "../../util/FormValidation";
+import { formProcess } from "../../util/FormValidation";
+import { ProductContext } from "../../util/ProductContext";
 
 const Navbar = () => {
   const { sku, name, price, productType, productDetail } =
     useContext(ProductContext);
 
-  const { array } = useContext(productDeleteContext);
+  const { array } = useContext(ProductContext);
 
-  // const url = "http://localhost:8080/products";
-  const liveUrl = "https://scandiwebserver.godwinosakwe.com/products";
+  const liveUrl = process.env.REACT_APP_LIVE_URL;
 
   let navbarHeader = "Product List";
   let enableChangeRoute = true;
@@ -41,13 +36,9 @@ const Navbar = () => {
     if (array.length === 0) {
       return alert("Please select a product to delete.");
     }
-    await axios
-      .delete(liveUrl, {
-        data: array,
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await axios.delete(liveUrl, {
+      data: array,
+    });
     window.location.reload();
   };
 
@@ -66,14 +57,10 @@ const Navbar = () => {
           if (response.data !== "") {
             alert(response.data);
           }
-        })
-        .catch((error) => {
-          console.log(error);
         });
-
       navigate("/");
     } else {
-      displayErrorMessage(sku, name, price, productType);
+      alert("Please, submit required data");
     }
   };
   return (
@@ -86,7 +73,6 @@ const Navbar = () => {
             onClick={enableChangeRoute ? changeRoute : save}
           >
             {enableChangeRoute ? <p>ADD</p> : <p>Save</p>}{" "}
-            {/* throwing an error when testing. It wants you to display just 'ADD' or 'SAVE' */}
           </button>
           <button
             id="delete-product-btn"
