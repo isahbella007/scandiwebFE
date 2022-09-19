@@ -1,0 +1,32 @@
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+span{ 
+  color: red;
+  display: none;
+}
+
+input:invalid[focused="true"]{ 
+  border: 1px solid red;
+}
+input:invalid[focused="true"]~span{ 
+  display: block;
+}
+
+.form-text{ 
+  font-size: 14px;
+  color: red;
+}
+.form-header-text{ 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

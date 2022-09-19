@@ -1,0 +1,90 @@
+export const furnitureFormInput = [
+  {
+    id: "height",
+    label: "Height (CM)",
+    name: "furnitureHeight",
+    type: "number",
+    required: true,
+    pattern: "^[0-9]",
+    step: "any",
+    placeholder: "Please, provide height", 
+    errormessage: "Please, provide the data of indicated type",
+  },
+  {
+    id: "width",
+    label: "Width (CM)",
+    name: "furnitureWidth",
+    type: "number",
+    required: true,
+    pattern: "^[0-9]",
+    step: "any",
+    placeholder: "Please, provide width", 
+    errormessage: "Please, provide the data of indicated type",
+  },
+  {
+    id: "length",
+    label: "Length (CM)",
+    name: "furnitureLength",
+    type: "number",
+    required: true,
+    pattern: "^[0-9]",
+    step: "any",
+    placeholder: "Please, provide length", 
+    errormessage: "Please, provide the data of indicated type",
+  },
+];
+export const bookFormInput = [
+  {
+    id: "weight",
+    label: "Weight (Kg)",
+    name: "bookWeight",
+    type: "number",
+    required: true,
+    placeholder: "Please, provide weight",
+    step: "any", 
+    pattern: "^[0-9]",
+    errormessage: "Please, provide the data of indicated type",
+    
+  },
+];
+export const dvdFormInput = [
+  {
+    id: "size",
+    label: "Size (MB)",
+    name: "dvdSize",
+    type: "number",
+    required: true,
+    step: "any",
+    pattern: "^[0-9]",
+    placeholder: "Please, provide size", 
+    errormessage: "Please, provide the data of indicated type",
+  },
+];
+export const formInputs = [
+  {
+    id: "sku",
+    label: "SKU",
+    name: "sku",
+    type: "text",
+    required: true,
+    errormessage: "Please, provide the data of indicated type",
+  },
+  {
+    id: "name",
+    label: "Name",
+    name: "name",
+    type: "text",
+    required: true,
+    errormessage: "Please, provide the data of indicated type",
+  },
+  {
+    id: "price",
+    label: "Price",
+    name: "price",
+    type: "number",
+    required: true,
+    step: "any",
+    pattern: "^[0-9]",
+    errormessage: "Please, provide the data of indicated type ",
+  },
+];

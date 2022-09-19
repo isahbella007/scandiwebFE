@@ -1,16 +1,14 @@
 import axios from "axios";
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/NavBar/Navbar";
+import { ProductContext } from "../../util/ProductContext";
 import "./Home.css";
-
-export const productDeleteContext = createContext({ array: "" });
 
 const Home = () => {
   const [result, setResult] = useState();
   const [selectedId, setSelectedId] = useState([]);
-  // const url = "http://localhost:8080/products";
-  const liveUrl = "https://scandiwebserver.godwinosakwe.com/products";
+  const liveUrl = process.env.REACT_APP_LIVE_URL
   useEffect(() => {
     axios
       .get(liveUrl, {
@@ -19,9 +17,6 @@ const Home = () => {
       .then((response) => {
         setResult(response.data.data);
       })
-      .catch((error) => {
-        console.log(error);
-      });
   }, []);
 
   const selectProducts = (id) => {
@@ -37,9 +32,9 @@ const Home = () => {
   return (
     <>
       <div className="home-container">
-        <productDeleteContext.Provider value={{ array: selectedId }}>
+        <ProductContext.Provider value={{ array: selectedId }}>
           <Navbar />
-        </productDeleteContext.Provider>
+        </ProductContext.Provider>
         <div className="cards-container">
           {result?.map((item) => (
             <div className="product-cards" key={item.SKU}>
